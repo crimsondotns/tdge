@@ -1,0 +1,16 @@
+name: Update Trending Score
+
+on:
+  schedule:
+    - cron: '0 * * * *' # รันทุกต้นชั่วโมง
+  workflow_dispatch: # ปุ่มกดรันเองในหน้า Actions
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Function
+        run: |
+          curl -i -X POST "${{ secrets.SUPABASE_URL }}/functions/v1/update-trending" \
+          -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
+          -H "Content-Type: application/json"
